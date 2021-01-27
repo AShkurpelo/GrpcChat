@@ -25,13 +25,18 @@ namespace Chat.Server
 			var success = this.subscribers.TryRemove(user.ConnectionId, out _);
 			if (success)
 			{
-				var message = new Message { Message_ = $"{user.Name} leaved chat" };
+				var message = new Message { Message_ = $"{user.Name} left chat" };
 				await this.SendMessageAsync(message);
 			}
 		}
 
 		public async Task SendMessageAsync(Message message)
 		{
+			if (string.IsNullOrEmpty(message.Message_))
+			{
+				return;
+			}
+
 			foreach (var user in this.subscribers.Values)
 			{
 				try
@@ -41,24 +46,6 @@ namespace Chat.Server
 				catch (Exception ex)
 				{
 					await this.RemoveUserAsync(user);
-				}
-			}
-		}
-
-		public async Task SendMessageAsync(ChatUser sender, Message message)
-		{
-			foreach (var user in this.subscribers.Values)
-			{
-				if (user.ConnectionId != sender.ConnectionId)
-				{
-					try
-					{
-						await user.Stream.WriteAsync(message);
-					}
-					catch (Exception ex)
-					{
-						await this.RemoveUserAsync(user);
-					}
 				}
 			}
 		}

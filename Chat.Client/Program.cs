@@ -11,19 +11,22 @@ namespace Chat.Client
 	{
 		static async Task Main(string[] args)
 		{
-            var userName = GreetUser();
+            var userName = UserIntro();
 
 			var channel = GrpcChannel.ForAddress("http://localhost:50051");
 			var client = new Messaging.MessagingClient(channel);
 
             using (var chatClient = client.Join())
             {
+                var initMessage = new Message { Name = userName };
+                await chatClient.RequestStream.WriteAsync(initMessage);
+
                 _ = Task.Run(async () =>
                 {
                     await foreach (var message in chatClient.ResponseStream.ReadAllAsync())
                     {
                         PrintMessage(message);
-					}
+                    }
                 });
 
                 var line = Console.ReadLine();
@@ -31,6 +34,7 @@ namespace Chat.Client
                 {
                     await chatClient.RequestStream.WriteAsync(new Message { Name = userName, Message_ = line });
                     line = Console.ReadLine();
+                    Console.CursorTop--;
                 }
 
                 await chatClient.RequestStream.CompleteAsync();
@@ -40,11 +44,12 @@ namespace Chat.Client
             Console.ReadKey();
         }
 
-        static string GreetUser()
+        static string UserIntro()
 		{
             Console.Write("Enter your chat-name: ");
             var userName = Console.ReadLine();
             Console.WriteLine($"\nWelcome, {userName}.");
+			Console.WriteLine("Use input to send messages.");
             Console.WriteLine("Send empty message to quit.\n\n");
 
             return userName;
@@ -52,13 +57,13 @@ namespace Chat.Client
 
         static void PrintMessage(Message message)
 		{
-            var hasUser = message.Name != null;
+            //var cursorPos = Console.GetCursorPosition();
+            Console.SetCursorPosition(0, Console.CursorTop);
 
-            var cursorPos = Console.GetCursorPosition();
-            Console.SetCursorPosition(0, cursorPos.Top - 1);
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.Write($"{DateTime.Now:HH:mm:ss} - ");
-            if (hasUser)
+
+            if (!string.IsNullOrEmpty(message.Name))
             {
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.Write($"{message.Name}: ");
@@ -68,9 +73,10 @@ namespace Chat.Client
 			{
                 Console.ForegroundColor = ConsoleColor.Cyan;
 			}
+
             Console.WriteLine(message.Message_);
             Console.ResetColor();
-            Console.SetCursorPosition(cursorPos.Left, cursorPos.Top);
+            Console.SetCursorPosition(0, Console.CursorTop + 1);
         }
 	}
 }
