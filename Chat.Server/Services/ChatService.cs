@@ -19,7 +19,7 @@ namespace Chat.Server
 
 		public override async Task Join(IAsyncStreamReader<Message> requestStream, IServerStreamWriter<Message> responseStream, ServerCallContext context)
 		{
-			if (!await requestStream.MoveNext())
+			if(!await requestStream.MoveNext())
 			{
 				return;
 			}
@@ -31,14 +31,14 @@ namespace Chat.Server
 				Stream = responseStream
 			};
 
-			await this.broadcastService.AddUserAsync(user);
+			await broadcastService.AddUserAsync(user);
 
 			do
 			{
-				await this.broadcastService.SendMessageAsync(requestStream.Current);
+				await broadcastService.SendMessageAsync(user, requestStream.Current);
 			} while (await requestStream.MoveNext());
 
-			await this.broadcastService.RemoveUserAsync(user);
+			await broadcastService.RemoveUserAsync(user);
 		}
 	}
 }
