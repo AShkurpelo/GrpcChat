@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Chat.Bus.Events;
+
+using EasyNetQ;
+
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +13,12 @@ namespace Chat.Server
 	public class BroadcastService
 	{
 		private readonly ConcurrentDictionary<string, ChatUser> subscribers = new ConcurrentDictionary<string, ChatUser>();
+		private readonly BusPublisher busPublisher;
+
+		public BroadcastService(BusPublisher busPublisher)
+		{
+			this.busPublisher = busPublisher;
+		}
 
 		public async Task AddUserAsync(ChatUser user)
 		{
@@ -16,7 +26,8 @@ namespace Chat.Server
 			if (success) 
 			{
 				var message = new Message { Message_ = $"{user.Name} joined chat" };
-				await this.SendMessageAsync(message);
+				await this.SendMessageAsync(message, user);
+				await this.busPublisher.PublishUserConnected(user);
 			}
 		}
 
@@ -26,11 +37,12 @@ namespace Chat.Server
 			if (success)
 			{
 				var message = new Message { Message_ = $"{user.Name} left chat" };
-				await this.SendMessageAsync(message);
+				await this.SendMessageAsync(message, user);
+				await this.busPublisher.PublishUserConnected(user);
 			}
 		}
 
-		public async Task SendMessageAsync(Message message)
+		public async Task SendMessageAsync(Message message, ChatUser sender)
 		{
 			if (string.IsNullOrEmpty(message.Message_))
 			{
@@ -48,6 +60,8 @@ namespace Chat.Server
 					await this.RemoveUserAsync(user);
 				}
 			}
+
+			await this.busPublisher.PublishMessageBroadcasted(message, sender);
 		}
 	}
 }

@@ -5,7 +5,13 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chat.Server", "Chat.Server\Chat.Server.csproj", "{19F7F5AC-DD10-4272-86FD-CCB5F92F70E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Client", "Chat.Client\Chat.Client.csproj", "{A37A7255-B00E-445D-9F30-A9E1D0E9DCE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chat.Client", "Chat.Client\Chat.Client.csproj", "{A37A7255-B00E-445D-9F30-A9E1D0E9DCE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Bus.Events", "Chat.Bus.Messages\Chat.Bus.Events.csproj", "{C2B625D8-0AEC-410E-A288-658FF32569BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Data", "Chat.Data\Chat.Data.csproj", "{78291E0C-4C84-41E2-8320-6A57244E9C1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Bus.Consumer", "Chat.Bus.Consumer\Chat.Bus.Consumer.csproj", "{A9E7B48D-BF46-4D15-91C8-66F2AFA50936}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +27,18 @@ Global
 		{A37A7255-B00E-445D-9F30-A9E1D0E9DCE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A37A7255-B00E-445D-9F30-A9E1D0E9DCE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A37A7255-B00E-445D-9F30-A9E1D0E9DCE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2B625D8-0AEC-410E-A288-658FF32569BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2B625D8-0AEC-410E-A288-658FF32569BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2B625D8-0AEC-410E-A288-658FF32569BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2B625D8-0AEC-410E-A288-658FF32569BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78291E0C-4C84-41E2-8320-6A57244E9C1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78291E0C-4C84-41E2-8320-6A57244E9C1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78291E0C-4C84-41E2-8320-6A57244E9C1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78291E0C-4C84-41E2-8320-6A57244E9C1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9E7B48D-BF46-4D15-91C8-66F2AFA50936}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9E7B48D-BF46-4D15-91C8-66F2AFA50936}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9E7B48D-BF46-4D15-91C8-66F2AFA50936}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9E7B48D-BF46-4D15-91C8-66F2AFA50936}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

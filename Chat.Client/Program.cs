@@ -57,7 +57,6 @@ namespace Chat.Client
 
         static void PrintMessage(Message message)
 		{
-            //var cursorPos = Console.GetCursorPosition();
             Console.SetCursorPosition(0, Console.CursorTop);
 
             Console.ForegroundColor = ConsoleColor.DarkYellow;

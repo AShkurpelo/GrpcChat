@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="EasyNetQ" Version="6.3.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Chat.Bus.Messages\Chat.Bus.Events.csproj" />
+	  <ProjectReference Include="..\Chat.Data\Chat.Data.csproj" />
+	</ItemGroup>
+
+</Project>

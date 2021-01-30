@@ -35,7 +35,7 @@ namespace Chat.Server
 
 			do
 			{
-				await broadcastService.SendMessageAsync(requestStream.Current);
+				await broadcastService.SendMessageAsync(requestStream.Current, user);
 			} while (await requestStream.MoveNext());
 
 			await broadcastService.RemoveUserAsync(user);

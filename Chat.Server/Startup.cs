@@ -18,6 +18,7 @@ namespace Chat.Server
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddSingleton<BroadcastService>();
+			services.AddSingleton<BusPublisher>();
 			services.AddGrpc(options =>
 			{
 				options.EnableDetailedErrors = true;

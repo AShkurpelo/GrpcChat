@@ -9,7 +9,12 @@
 	</ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="EasyNetQ" Version="6.3.1" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.34.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Chat.Bus.Messages\Chat.Bus.Events.csproj" />
   </ItemGroup>
 
 </Project>
